@@ -130,7 +130,7 @@ class TkinterClass:
         rb3 = ttk.Radiobutton(
             label_frame2,
             text='null',
-            value='null',
+            value="null",
             variable=self.v2)
 
         # Radiobutton 2
@@ -300,11 +300,11 @@ class TkinterClass:
             ex = traceback.format_exc()
             messagebox.showerror('エラー', '設定csvが不正です。\n\n'+ex)
 
-        #入れ替え時対象には入らない場所に格納する値の指定
+        #取得範囲外のデータ形式
         none_select_column =  self.v2.get()
         #none_select_column = '0'
         
-        #入れ替え時対象の数値がnullの場合に格納する値の指定
+        #入れ替え時対象の数値がnull or 空の場合に格納する値の指定
         none_valiable_column = self.v3.get()
         #none_valiable_column = '-'
 

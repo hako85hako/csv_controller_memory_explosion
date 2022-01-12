@@ -23,11 +23,6 @@ def main(dir_name,ch_list,none_select_column,none_valiable_column,offset,id,pass
 
         #編集用パス指定
         csv_paths = glob(f'{file}/*.csv')
-        
-        #テスト
-        #print("↓csvのpathが出力されるはず")
-        #print(csv_paths)
-
         for csv_path in csv_paths:
             #csv読み込み
             f = open(csv_path, 'r')
@@ -39,7 +34,6 @@ def main(dir_name,ch_list,none_select_column,none_valiable_column,offset,id,pass
             for row in f:
                 #結果の入子
                 items = []
-                #for ch in ch_list:
                 for i in range(int(offset)+1):
                     item = row[i]
                     items += [item]
@@ -60,11 +54,15 @@ def main(dir_name,ch_list,none_select_column,none_valiable_column,offset,id,pass
                                 if(item.is_integer()):
                                     item = int(item)
                             except:
-                                item = none_valiable_column
+                                #元の値がnullの場合はそのまま格納する
+                                if row[ch[0]] == "null" or row[ch[0]] == "Null" or row[ch[0]] == "\(null\)":
+                                    item = row[ch[0]]
+                                else:
+                                    item = none_valiable_column
                         else:
                             item = none_select_column
                     except:
-                        item = none_valiable_column
+                        raise ValueError("入れ替え時error") 
                     items += [item]
                 data += [items]
 
@@ -74,6 +72,5 @@ def main(dir_name,ch_list,none_select_column,none_valiable_column,offset,id,pass
         writer = csv.writer(f)
         writer.writerows(data)
         f.close()
-        print(dirname+'：done')
 if __name__=="__main__":
     frame.TkinterClass()
